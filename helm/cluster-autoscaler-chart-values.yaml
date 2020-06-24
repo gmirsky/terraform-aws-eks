@@ -1,0 +1,12 @@
+awsRegion: us-east-1
+
+rbac:
+  create: true
+  serviceAccountAnnotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::724478533141:role/cluster-autoscaler"
+
+autoDiscovery:
+  clusterName: eks-irsa
+  enabled: true
+
+#helm install --name cluster-autoscaler --namespace kube-system stable/cluster-autoscaler --values=cluster-autoscaler-chart-values.yaml

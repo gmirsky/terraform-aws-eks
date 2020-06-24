@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "action": {
+        "type": "expire"
+      },
+      "description": "Keep last 101 container images",
+      "rulePriority": 10,
+      "selection": {
+        "countNumber": 101,
+        "countType": "imageCountMoreThan",
+        "tagStatus": "any"
+      }
+    }
+  ]
+}
