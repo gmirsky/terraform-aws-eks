@@ -1,5 +1,5 @@
 locals {
-  cluster_name                  = "eks-irsa"
+  cluster_name                  = "eks-irsa-${lower(terraform.workspace)}"
   k8s_service_account_namespace = "kube-system"
   k8s_service_account_name      = "cluster-autoscaler-aws-cluster-autoscaler"
   aws_availability_zones = [
@@ -9,6 +9,13 @@ locals {
   ]
   aws_vpc_tags = {
     Name = "${var.aws_vpc_name}"
+  }
+  common_tags = {
+    Environment       = lower(terraform.workspace)
+    cost-center       = "00-0000.00"
+    Role              = "EKS"
+    created_by        = data.aws_caller_identity.current.arn
+    terraform_managed = true
   }
   aws_private_subnet_cidrs = [
     cidrsubnet("${var.aws_vpc_cidr}", 8, 250),

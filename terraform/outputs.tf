@@ -102,3 +102,8 @@ output "repo_url" {
   description = "The URL for the image created"
   value       = module.ecr-repo.repo_url
 }
+
+output "common_tags" {
+  description = "Comman tags applied to all tagable resources"
+  value       = local.common_tags
+}

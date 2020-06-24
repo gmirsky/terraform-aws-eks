@@ -52,18 +52,6 @@ variable "worker_asg_max_size" {
   default     = 5
 }
 
-variable "common_tags" {
-  description = "Common tags to be applied to all AWS resources"
-  type        = map
-  default = {
-    Owner             = "user"
-    Environment       = "development"
-    cost-center       = "00-0000.00"
-    Role              = "EKS"
-    terraform_managed = true
-  }
-}
-
 variable "spot_price" {
   type        = number
   description = "Spot instance price"
@@ -86,4 +74,10 @@ variable "spot_asg_max_size" {
   type        = number
   description = "Auto scaling group maximum capacity for the spot group"
   default     = 5
+}
+
+variable "eks_cluster_version" {
+  description = "AWS EKS Cluster Version"
+  type        = number
+  default     = 1.16
 }
