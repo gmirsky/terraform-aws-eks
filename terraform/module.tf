@@ -10,10 +10,10 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
-  tags                 = var.common_tags
+  tags                 = local.common_tags
   vpc_tags = merge(
     local.aws_vpc_tags,
-    var.common_tags
+    local.common_tags
   )
 }
 
@@ -21,7 +21,7 @@ module "eks" {
   source                                = "terraform-aws-modules/eks/aws"
   version                               = "~> 12.1.0"
   cluster_name                          = local.cluster_name
-  cluster_version                       = "1.16"
+  cluster_version                       = var.eks_cluster_version
   subnets                               = module.vpc.public_subnets
   vpc_id                                = module.vpc.vpc_id
   enable_irsa                           = true
@@ -38,7 +38,7 @@ module "eks" {
   eks_oidc_root_ca_thumbprint           = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280" #Thumbprint of Root CA for EKS OIDC, Valid until 2037
   worker_sg_ingress_from_port           = 22                                         #Must be changed to a lower value if some pods in your cluster will expose a port lower than 1025 (e.g. 22, 80, or 443).
   write_kubeconfig                      = true
-  tags                                  = var.common_tags
+  tags                                  = local.common_tags
   cluster_encryption_config = [
     {
       provider_key_arn = aws_kms_key.eks.arn
@@ -97,13 +97,13 @@ module "iam_assumable_role_admin" {
 
 module "ecr-repo" {
   source           = "trussworks/ecr-repo/aws"
-  version          = "1.0.0"
+  version          = "~> 1.0.0"
   container_name   = local.cluster_name
   ecr_policy       = data.aws_iam_policy_document.org_ecr.json
   lifecycle_policy = local.lifecycle_policy_json
   scan_on_push     = true
   tags = merge(
     local.aws_vpc_tags,
-    var.common_tags
+    local.common_tags
   )
 }
