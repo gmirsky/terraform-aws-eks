@@ -28,3 +28,5 @@ override.tf.json
 *tfplan*
 
 notes.txt
+
+.DS_Store
