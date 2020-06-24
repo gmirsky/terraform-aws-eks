@@ -2,10 +2,13 @@ data "aws_security_group" "default" {
   name   = "default"
   vpc_id = module.vpc.vpc_id
 }
+
 data "aws_availability_zones" "available" {
 }
+
 data "aws_caller_identity" "current" {
 }
+
 data "aws_iam_policy_document" "cluster_autoscaler" {
   statement {
     sid    = "clusterAutoscalerAll"
@@ -40,14 +43,18 @@ data "aws_iam_policy_document" "cluster_autoscaler" {
     }
   }
 }
+
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
+
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
+
 data "aws_organizations_organization" "user_org" {
 }
+
 data "aws_iam_policy_document" "org_ecr" {
   statement {
     principals {
