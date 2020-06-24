@@ -16,6 +16,7 @@ module "vpc" {
     var.common_tags
   )
 }
+
 module "eks" {
   source                                = "terraform-aws-modules/eks/aws"
   version                               = "~> 12.1.0"
@@ -75,6 +76,7 @@ module "eks" {
     }
   ]
 }
+
 module "iam_assumable_role_admin" {
   source      = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version     = "~> v2.6.0"
@@ -92,6 +94,7 @@ module "iam_assumable_role_admin" {
     "system:serviceaccount:${local.k8s_service_account_namespace}:${local.k8s_service_account_name}"
   ]
 }
+
 module "ecr-repo" {
   source           = "trussworks/ecr-repo/aws"
   version          = "1.0.0"
